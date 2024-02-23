@@ -32,8 +32,8 @@ root.right.right = Node(7)
 
 value = int(input("Enter the value of the node to find the path for: "))
 
-path_to_node = dfs(root, value)
-if path_to_node:
-    print("DFS traversal:", path_to_node)
+path = dfs(root, value)
+if path:
+    print("DFS traversal:", path)
 else:
     print("Node not found in the tree.")

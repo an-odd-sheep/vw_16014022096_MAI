@@ -1,61 +1,41 @@
-class TreeNode:
+class Node:
     def __init__(self, value):
         self.value = value
-        self.children = []
+        self.left = None
+        self.right = None
 
-    def add_child(self, child):
-        self.children.append(child)
+def dls(root, target, depth):
+    if root is None or depth < 0:
+        return None
+    
+    if root.value == target:
+        return [root.value]
+    
+    left_path = dls(root.left, target, depth - 1)
+    if left_path:
+        return [root.value] + left_path
+    
+    right_path = dls(root.right, target, depth - 1)
+    if right_path:
+        return [root.value] + right_path
+    
+    return None
 
-def DFS(node, goal):
-    if node is None:
-        return False
-    print(node.value)
-    if node.value == goal:
-        return True
-    for child in node.children:
-        if DFS(child, goal):
-            return True
-    return False
 
-def DLS(node, goal, depth):
-    if node is None or depth < 0:
-        return False
-    print(node.value)
-    if node.value == goal:
-        return True
-    if depth == 0:
-        return False
-    for child in node.children:
-        if DLS(child, goal, depth - 1):
-            return True
-    return False
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.left = Node(6)
+root.right.right = Node(7)
 
-def ID_DFS(node, goal):
-    depth = 0
-    while True:
-        print("Depth Limit:", depth)
-        if DLS(node, goal, depth):
-            return True
-        depth += 1
+value = int(input("Enter the value of the node to find the path for: "))
+depth_limit = int(input("Enter the depth limit: "))
 
-# Example Usage:
-# Constructing a simple search tree
-root = TreeNode(1)
-node2 = TreeNode(2)
-node3 = TreeNode(3)
-node4 = TreeNode(4)
-node5 = TreeNode(5)
+path = dls(root, value, depth_limit)
 
-root.add_child(node2)
-root.add_child(node3)
-node2.add_child(node4)
-node3.add_child(node5)
-
-print("DFS:")
-DFS(root, 5)
-
-print("\nDLS:")
-DLS(root, 5, 3)  # Depth limit is 3
-
-print("\nID-DFS:")
-ID_DFS(root, 5)
+if path:
+    print("DLS traversal:", path)
+else:
+    print("Node not found in the tree within the specified depth limit.")
