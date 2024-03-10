@@ -48,7 +48,7 @@ def id_bfs(initial_state, final_state):
 
         depth_limit += 1
 
-        if depth_limit > 30:  # You can adjust the maximum depth limit
+        if depth_limit > 30:  
             return None
 
 def main():
